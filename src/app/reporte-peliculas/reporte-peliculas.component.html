@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>Lab14</title>
+</head>
+<body class="bg-gray-100 p-4">
+
+  <div class="mb-4">
+    <label for="filtro-genero" class="block">Filtrar por Género:</label>
+    <select id="filtro-genero" [(ngModel)]="filtroGenero" class="p-2 border rounded">
+      <option value="">Todos</option>
+      <option *ngFor="let genero of obtenerGenerosUnicos()" [value]="genero">{{ genero }}</option>
+    </select>
+  </div>
+
+  <div class="mb-4">
+    <label for="filtro-anno" class="block">Filtrar por Año:</label>
+    <select id="filtro-anno" [(ngModel)]="filtroAnno" class="p-2 border rounded">
+      <option value="">Todos</option>
+      <option *ngFor="let anno of obtenerAnnosUnicos()" [value]="anno">{{ anno }}</option>
+    </select>
+  </div>
+
+  <table class="border-collapse border w-full mb-4">
+    <thead>
+      <tr class="bg-gray-200">
+        <th class="p-2 border">Título</th>
+        <th class="p-2 border">Género</th>
+        <th class="p-2 border">Año de lanzamiento</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pelicula of peliculas | filtrarPeliculas:filtroGenero:filtroAnno" class="hover:bg-gray-100">
+        <td class="p-2 border">{{ pelicula.titulo }}</td>
+        <td class="p-2 border">{{ pelicula.genero }}</td>
+        <td class="p-2 border">{{ pelicula.lanzamiento }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button (click)="generarPDF()" class="bg-blue-500 text-white py-2 px-4 rounded mr-2">Generar PDF</button>
+  <button (click)="generarExcel()" class="bg-green-500 text-white py-2 px-4 rounded">Generar EXCEL</button>
+
+</body>
+</html>
